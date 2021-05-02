@@ -1,3 +1,3 @@
-# Resume-Parsing-and-Ranking
+# CS50 Final Project
 
-Parsing through resume and calculating the similarity score of each resume with the job description using nlp
+Quiz App

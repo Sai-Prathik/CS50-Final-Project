@@ -1,0 +1,44 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <title>Chatter</title> 
+    <script type="module" src="{% static 'Authentication.js' %}"></script>
+    <script type="module" src="{% static 'index.js' %}"></script>
+</head>
+<body> 
+    <div id="messages"></div>
+    <div id="authentication"> 
+        <button id="logout">Logout</button> 
+        <div id="Title">Login</div>
+        <div id="login"> 
+           <form   id="login_form">
+               {% csrf_token %}
+            <input type="text" required="true" class="input-field" placeholder="Username" id="login-input">
+            <input type="password" required="true" class="password-field" id="login-password" placeholder="Password">
+            <input type="submit" value="Login" class="btn" id="login_btn">
+        </form>
+        </div>
+       
+        <div id="register">
+            <form method="POST" id="register_form">
+                {% csrf_token %}
+                <input type="email" required="true" name="" class="input-field" id="register-mail"   placeholder="Email">
+                <input type="text" required="true" class="input-field" id="register-username" placeholder="Username">
+                <input type="text" name="" id="first-name" placeholder="First Name" class="input-field">
+                <input type="text" name="" id="last-name" placeholder="Last Name" class="input-field">
+                <input type="password" required="true" name="" class="password-field" id="register-pwd"  placeholder="Password">
+                <input type="password" required="true" name="" class="password-field" id="register-cpwd"  placeholder="Confirm Password">
+                <input type="submit" value="Sign Up" class="btn" id="signup_btn">
+            </form>
+        </div>
+        <div id="toggle"></div>    
+    </div> 
+    <!----------------------------------Authentication------------------------------>
+<section id="chat_page"></section>
+</body>
+</html>

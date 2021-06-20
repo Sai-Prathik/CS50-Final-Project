@@ -75,12 +75,9 @@ WSGI_APPLICATION = 'Chat_Application.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Chat',
-        'USER':'postgres',
-        'PASSWORD':'root',
-        'HOST':'localhost'
+     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -128,3 +125,5 @@ STATICFILES_DIRS=[BASE_DIR+"/static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL="Chat.User" 
+
+ 

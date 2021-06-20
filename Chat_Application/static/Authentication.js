@@ -1,3 +1,4 @@
+import { load_chat_page } from "./Chat.js";
 export function load_login(){
      
     var toggle_btn=document.querySelector
@@ -8,7 +9,7 @@ export function load_login(){
     var pwd=document.querySelector("#login-password");
 
     document.querySelector("#login").style.display="block";
-
+    document.querySelector("#chat_page").style.display="none";
     document.querySelector("#Title").innerHTML="Login";
 
     document.querySelector("#register").style.display="none";
@@ -16,11 +17,10 @@ export function load_login(){
     toggle_btn.innerHTML="New here? Signup";
     toggle_btn.onclick=()=>{ 
         load_signup();
-    }
-
+    } 
     document.querySelector("#login_form").onsubmit=(e)=>{
         e.preventDefault();
-        
+        user=input_field.value;
         fetch("/login",{
             method:"POST",
             body:JSON.stringify({
@@ -31,11 +31,11 @@ export function load_login(){
             alert(e.Message);
             input_field.value="";
             pwd.value=""; 
-            if(e.status){
-                document.querySelector("#logout").style.display="block";
+            if(e.status){  
+                load_chat_page();
             }
             else{
-                document.querySelector("#logout").style.display="none";
+                load_login();
             }
         
         }); 
@@ -49,7 +49,7 @@ export function load_signup(){
     var toggle_btn=document.querySelector("#toggle");
 
     var mail=document.querySelector("#register-mail");
-
+    document.querySelector("#chat_page").style.display="none";
     var username=document.querySelector("#register-username");
 
     var pwd=document.querySelector("#register-pwd");
@@ -103,6 +103,10 @@ export function load_signup(){
 }
 
 export function logout_view(){
-    fetch("/logout");
-    document.querySelector("#logout").style.display="none";
+    fetch("/logout").then(response=>response.json()).then(e=>{
+        alert("logged out");
+        document.querySelector("#authentication").style.display="block";
+        load_login();
+    })
+    
 }

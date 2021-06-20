@@ -1,10 +1,15 @@
-import {load_login} from "./Authentication.js"; 
-import {logout_view} from "./Authentication.js"; 
-
+import {load_login} from "./Authentication.js";  
+import {load_chat_page} from "./Chat.js"; 
 document.addEventListener("DOMContentLoaded",()=>{
     
     fetch("/get_status").then(response=>response.json()).then(e=>{
-            
+        if(e.status){
+            load_chat_page();
+        }
+        else{
+            load_login();
+        }
+        
     })
     
 })

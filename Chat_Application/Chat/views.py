@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt  
 from django.db import IntegrityError
 import json
-from .models import User
+from .models import Messages, User,Contacts
+from django.views.generic import TemplateView
 def index(request): 
     return render(request,"Template.html")
 
@@ -48,3 +49,48 @@ def get_status(request):
         return JsonResponse({"status":True})
     else:
         return JsonResponse({"status":False})
+
+
+@csrf_exempt
+def set_messages(request):
+        if request.method=="POST":
+            data=json.loads(request.body)
+            sender=User.objects.get(username=request.user)
+            receiver=User.objects.get(username=data["receiver"])
+            message=data["message"]
+            obj=Messages(sender=sender,receiver=receiver,message=message)
+            obj.save()
+            try:
+                Contacts.objects.get(user=sender,contact=receiver)
+                print("exists")
+            except Contacts.DoesNotExist:
+                Contacts(user=sender,contact=receiver).save()
+                print("doesn't exist")
+            return JsonResponse({"Message":"Message Sent"})
+        else:
+            return JsonResponse({"Message":"Error"})
+
+
+
+def get_messages(request,user):
+        l=[]
+        print(user)
+        user_=User.objects.get(username=user)
+        sent_messages=Messages.objects.filter(sender=request.user,receiver=user_)
+        received_messages=Messages.objects.filter(receiver=request.user,sender=user_) 
+        l=list(sent_messages)+list(received_messages) 
+        l=sorted(l,key=lambda x:x.sent_date,reverse=False) 
+        return JsonResponse([i.serialize() for i in l],safe=False)
+
+
+
+def get_contacts(request,user): 
+        obj=User.objects.filter(username__contains=user)  
+        return JsonResponse([i.serialize() for i in obj if i!=request.user],safe=False)
+
+def get_friends(request):
+    obj=Contacts.objects.filter(user=request.user) 
+    l1=[i.serialize() for i in obj] 
+    return JsonResponse(l1,safe=False)
+
+ 

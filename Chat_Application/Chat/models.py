@@ -7,16 +7,20 @@ class User(AbstractUser):
 
     def serialize(self):
         return {
-            "username":self.username
+            "username":self.username,
+            "Email":self.email,
+            "first_name":self.first_name,
+            "second_name":self.last_name
         }
 
 class Contacts(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user")
     contact=models.ForeignKey(User,on_delete=models.CASCADE,related_name="contact")
-    
+    status=models.BooleanField(default=True)
     def serialize(self): 
             return {
-            "username":self.contact.username
+            "username":self.contact.username,
+            "status":self.status
             }
      
 
@@ -31,11 +35,14 @@ class Messages(models.Model):
         return self.message
     
     
-    def serialize(self):
-        return{
+    def serialize(self): 
+        month=datetime.strptime(str(self.sent_date.month),"%m") 
+        date=str(month.strftime("%b"))+","+str(self.sent_date.day)
+        time=self.sent_date.strftime("%H:%M %p") 
+        return {
             "message":self.message,
             "sender":self.sender.username,
             "receiver":self.receiver.username,
-            "date":self.sent_date.date(),
-            "time":str(self.sent_date.time().hour)+":"+str(self.sent_date.time().minute)
+            "date":date,
+            "time": time
             }

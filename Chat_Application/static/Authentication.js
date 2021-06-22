@@ -1,4 +1,6 @@
 import { load_chat_page } from "./Chat.js";
+import {loop} from "./Chat.js";
+
 export function load_login(){
      
     var toggle_btn=document.querySelector
@@ -9,6 +11,7 @@ export function load_login(){
     var pwd=document.querySelector("#login-password");
 
     document.querySelector("#login").style.display="block";
+    document.querySelector("#profile-page").style.display="none";
     document.querySelector("#chat_page").style.display="none";
     document.querySelector("#Title").innerHTML="Login";
 
@@ -19,15 +22,14 @@ export function load_login(){
         load_signup();
     } 
     document.querySelector("#login_form").onsubmit=(e)=>{
-        e.preventDefault();
-        user=input_field.value;
+        e.preventDefault(); 
         fetch("/login",{
             method:"POST",
             body:JSON.stringify({
                 username:input_field.value,
                 password:pwd.value
             }) 
-        }).then(response=>response.json()).then(e=>{
+        }).then(response=>response.json()).then(e=>{  
             alert(e.Message);
             input_field.value="";
             pwd.value=""; 
@@ -62,7 +64,7 @@ export function load_signup(){
 
 
     document.querySelector("#login").style.display="none";
-
+    document.querySelector("#profile-page").style.display="none";
     document.querySelector("#register").style.display="block";
 
     document.querySelector("#Title").innerHTML="Sign Up";
@@ -105,6 +107,7 @@ export function load_signup(){
 export function logout_view(){
     fetch("/logout").then(response=>response.json()).then(e=>{
         alert("logged out");
+        clearInterval(loop);
         document.querySelector("#authentication").style.display="block";
         load_login();
     })

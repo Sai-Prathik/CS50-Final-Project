@@ -23,7 +23,8 @@ def login_view(request):
          return JsonResponse({"Message":"Login Failed","status":False})
         else:
             login(request,user) 
-            return JsonResponse({"Message":"Logged in Successfully","status":True},safe=False)
+            return JsonResponse({"Message":"Logged in Successfully","status":True,"username":request.user.serialize()},safe=False)
+    return JsonResponse({"Message":"Login Failed","status":False})
 
 @csrf_exempt
 def register(request):
@@ -60,12 +61,19 @@ def set_messages(request):
             message=data["message"]
             obj=Messages(sender=sender,receiver=receiver,message=message)
             obj.save()
+
+            
             try:
-                Contacts.objects.get(user=sender,contact=receiver)
-                print("exists")
+                Contacts.objects.get(user=sender,contact=receiver) 
+                
             except Contacts.DoesNotExist:
                 Contacts(user=sender,contact=receiver).save()
-                print("doesn't exist")
+                Contacts(user=receiver,contact=sender).save()
+            
+            obj=Contacts.objects.get(user=receiver,contact=sender)
+            obj.status=False
+            obj.save()
+                
             return JsonResponse({"Message":"Message Sent"})
         else:
             return JsonResponse({"Message":"Error"})
@@ -73,8 +81,7 @@ def set_messages(request):
 
 
 def get_messages(request,user):
-        l=[]
-        print(user)
+        l=[] 
         user_=User.objects.get(username=user)
         sent_messages=Messages.objects.filter(sender=request.user,receiver=user_)
         received_messages=Messages.objects.filter(receiver=request.user,sender=user_) 
@@ -93,4 +100,26 @@ def get_friends(request):
     l1=[i.serialize() for i in obj] 
     return JsonResponse(l1,safe=False)
 
- 
+def set_read_status(request,user):
+    contact_obj=User.objects.get(username=user)
+    user_obj=User.objects.get(username=request.user)
+    obj=Contacts.objects.get(user=user_obj,contact=contact_obj)
+    print(user)
+    obj.status=True
+    obj.save()
+    return JsonResponse({"Message":"Successful"})
+
+@csrf_exempt
+def set_get_user_details(request):
+        if request.method=="POST":
+            data=json.loads(request.body)
+            obj=User.objects.get(username=request.user)
+            obj.username=data["username"]
+            obj.email=data["Email"]
+            obj.first_name=data["first_name"]
+            obj.last_name=data["last_name"]
+            obj.save()
+
+            return JsonResponse({"Message":"Changes Saved"})
+        else:
+            return JsonResponse(request.user.serialize())

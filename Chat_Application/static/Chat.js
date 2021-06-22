@@ -69,6 +69,11 @@ export function load_chat_page(){
            document.querySelector("#search-bar").style.border="solid white";
        }   
    }
+
+
+   fetch("get_user_details").then(response=>response.json()).then(e=>{
+       document.querySelector("#user_title").innerHTML=`${e.username}`;
+   })
     
    
 }
@@ -100,16 +105,17 @@ function load_contacts(contacts){
        var demo_text=document.createElement("div");
        demo_text.className="demo-text";
        demo_text.innerHTML=element.username
-        if(element.status==false){
-            demo_text.style.fontWeight="bolder";
+        if(element.status==true){
+            demo_text.style.fontWeight="1000";
         }
 
        contact.appendChild(img);
        contact.appendChild(demo_text);
        contact.style.cursor="pointer";
        contact.onclick=()=>{
+           
            clearInterval(loop);
-           demo_text.style.fontWeight="none";
+           demo_text.style.fontWeight="100";
            fetch(`/set_read_status/${element.username}`)
            update_scroll(false);
          load_msg_page(element.username) 

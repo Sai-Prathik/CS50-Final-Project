@@ -17,6 +17,8 @@ class Contacts(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user")
     contact=models.ForeignKey(User,on_delete=models.CASCADE,related_name="contact")
     status=models.BooleanField(default=True)
+    def get_status(self):
+        return self.status
     def serialize(self): 
             return {
             "username":self.contact.username,
@@ -29,7 +31,7 @@ class Messages(models.Model):
     message=models.CharField(max_length=1000000,default="")
     sent_date=models.DateTimeField(auto_now=True,blank="")
     receiver=models.ForeignKey(User,on_delete=models.CASCADE,related_name="Receiver",default="")
-    
+   
     
     def __str__(self):
         return self.message
@@ -39,10 +41,13 @@ class Messages(models.Model):
         month=datetime.strptime(str(self.sent_date.month),"%m") 
         date=str(month.strftime("%b"))+","+str(self.sent_date.day)
         time=self.sent_date.strftime("%H:%M %p") 
+
+       
+
         return {
             "message":self.message,
             "sender":self.sender.username,
             "receiver":self.receiver.username,
             "date":date,
-            "time": time
+            "time": time 
             }

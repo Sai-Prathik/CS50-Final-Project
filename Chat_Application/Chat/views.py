@@ -71,7 +71,7 @@ def set_messages(request):
                 Contacts(user=receiver,contact=sender).save()
             
             obj=Contacts.objects.get(user=receiver,contact=sender)
-            obj.status=False
+            obj.status=True
             obj.save()
                 
             return JsonResponse({"Message":"Message Sent"})
@@ -105,7 +105,7 @@ def set_read_status(request,user):
     user_obj=User.objects.get(username=request.user)
     obj=Contacts.objects.get(user=user_obj,contact=contact_obj)
     print(user)
-    obj.status=True
+    obj.status=False
     obj.save()
     return JsonResponse({"Message":"Successful"})
 

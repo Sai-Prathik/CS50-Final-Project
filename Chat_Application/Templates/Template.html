@@ -50,7 +50,9 @@
                   </svg>
                   <div id="dropdown">
                       <div id="profile-div" class="drop-item">Profile</div>
-                      <hr> 
+                      <hr>
+                      <div class="drop-item" id="create-group-btn">Create Group</div> 
+                      <hr>
                     <div id="logout" class="drop-item">Logout</div>
                   </div>
              </div> 
@@ -67,6 +69,7 @@
              <div id="nvbr">
                  <img src="https://image.flaticon.com/icons/png/128/3011/3011270.png" alt="" id="display-pic">
                  <div id="username"></div>
+                 <button id="leave-delete"></button>
              </div>
              
              <div id="messages">
@@ -85,8 +88,31 @@
          </div> 
           
 </section>
-<!---------------------------------------Chat Page------------------------------------------------>
+<!---------------------------------------End of Chat Page------------------------------------------------>
+<section id="create_group">
+    <div id="create-group-page">
+        <div id="group-details"> 
+            <input type="text" id="group-title" class="input-field" required="true" placeholder="Group Name">
+        </div>
+        <div id="mem-title">Add Members</div>
+        <div id="add-members">
+            
+            <div id="mem-list"> </div>
+        </div>
 
+     <div id="btns">
+         <button id="save-group-btn">Create Group</button>
+         <button id="cancel-group-btn">Cancel</button>
+     </div>
+
+
+
+
+    </div>
+</section>
+
+
+<!----------------------------------------End of Create Group Page-------------------------------------->
 <section id="profile-page">
     <div id="profile-block">
         <img src="https://image.flaticon.com/icons/png/512/93/93634.png" alt="" id="back-button">

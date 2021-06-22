@@ -14,7 +14,7 @@ export function load_login(){
     document.querySelector("#profile-page").style.display="none";
     document.querySelector("#chat_page").style.display="none";
     document.querySelector("#Title").innerHTML="Login";
-
+    document.querySelector("#create_group").style.display="none";
     document.querySelector("#register").style.display="none";
 
     toggle_btn.innerHTML="New here? Signup";
@@ -66,6 +66,7 @@ export function load_signup(){
     document.querySelector("#login").style.display="none";
     document.querySelector("#profile-page").style.display="none";
     document.querySelector("#register").style.display="block";
+    document.querySelector("#create_group").style.display="none";
 
     document.querySelector("#Title").innerHTML="Sign Up";
 

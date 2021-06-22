@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Messages,Contacts
+from .models import User,Messages,Contacts,Chat_Group,Group_messages
 # Register your models here.
 
 class MessageAdmin(admin.ModelAdmin):
@@ -10,3 +10,5 @@ class MessageAdmin(admin.ModelAdmin):
 admin.site.register(User)
 admin.site.register(Messages,MessageAdmin)
 admin.site.register(Contacts)
+admin.site.register(Chat_Group)
+admin.site.register(Group_messages)

@@ -93,7 +93,7 @@ body{
 }
     */
 
-#chat,#profile-block{
+#chat,#profile-block,#create-group-page{
     background-color:transparent;
     position: relative;
     top: 40px;
@@ -454,4 +454,85 @@ body{
     margin-right: auto;
     font-size: larger;
     font-weight: bolder;
+}
+#group-details{
+    position: relative;
+    left: 75%;   
+    transform: translate(-50%); 
+    width: auto;  
+    height: 4%;
+    top: 10%;
+    color: white;
+}
+#group-title{
+    width: 15vw;
+}
+#create-group-page{
+    width: 30%; 
+    display: block; 
+}
+.add_member{
+    color: white;
+}
+#add-members{
+    position: relative; 
+    left: 50%;
+    transform: translate(-50%);
+    border: solid white; 
+    border-radius: 5%;
+    height: 40vh;
+    width: 17vw;
+    top: 20%;
+    padding: 5%;
+}
+
+.select-member{ 
+    -webkit-transform: scale(1.5);
+    cursor: pointer;
+}
+.add_member{
+    margin-bottom: 5%;
+}
+
+#btns{
+    position: relative;
+    top: 20vh;
+    width: 17vw;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+#save-group-btn,#cancel-group-btn{
+    float: right;
+    cursor: pointer;
+    background-color: 	#32CD32;
+    padding:3%;
+    border: none;
+    border-radius:10% ;
+    color: white;
+}
+
+#cancel-group-btn,#leave-delete{
+    background-color: 	#ec2a2a;
+    float: left;
+    cursor: pointer;
+    border: none;
+    color: white;
+}
+#leave-delete{
+    margin-left: auto;
+    padding: 1%;
+    border-radius: 5px;
+    margin-right: 3vw;
+}
+#mem-list{
+    overflow-y: scroll;
+    height: 30vh;
+}
+#mem-title{
+    margin-bottom: 3vh;
+    color: white;
+    position: relative;
+    top: 19vh;
+    left: 40%; 
 }

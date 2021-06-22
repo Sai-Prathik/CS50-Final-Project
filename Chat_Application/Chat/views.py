@@ -139,7 +139,10 @@ def create_group(request):
         data=json.loads(request.body)
         admin=User.objects.get(username=request.user)
         group=Chat_Group(group_name=data["group_title"],created_by=admin)
-        group.save()
+        try:
+            group.save()
+        except IntegrityError:
+            return JsonResponse({"Message":"Group Name Already Taken"})
         group.members.add(admin)
         for i in data["members"]:
             mem=User.objects.get(username=i)

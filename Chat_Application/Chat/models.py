@@ -32,8 +32,9 @@ class Chat_Group(models.Model):
     created_date=models.DateTimeField(auto_now_add=True)
     members=models.ManyToManyField(User,related_name="members",default="")
 
-    def serialize(self):
+    def serialize(self): 
         return{
+            "id":self.id,
             "username":self.group_name,
             "type":"group",
             "admin":self.created_by.username

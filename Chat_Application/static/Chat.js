@@ -211,6 +211,7 @@ function load_msg_page(user,c_type,admin){
                 fetch(`leave_delete/delete/${user}`).then(response=>response.json()).then(e=>{
                     alert(e.Message);
                     load_chat_page();
+                    clearInterval(loop);
                 })
             }
         }
@@ -220,6 +221,7 @@ function load_msg_page(user,c_type,admin){
                 fetch(`leave_delete/leave/${user}`).then(response=>response.json()).then(e=>{
                     alert(e.Message);
                     load_chat_page();
+                    clearInterval(loop);
                 })
             }
         }   
@@ -282,8 +284,7 @@ export function create_group(){
 
     document.querySelector("#save-group-btn").onclick=()=>{
 
-        var arr=[];
-        var i=-1;
+        var arr=[]; 
        document.querySelector("#mem-list").childNodes.forEach(e=>{
             if(e.querySelector(".select-member").checked){
                 arr.push(e.childNodes[1].innerHTML);
@@ -298,10 +299,15 @@ export function create_group(){
                 group_title:document.querySelector("#group-title").value,
                 members:arr
             })
-        }) 
+        }).then(response=>response.json()).then(e=>{
+            document.querySelector("#group-title").value="";
+            alert(e.Message);
+            load_chat_page();
+        })
     }
 
     document.querySelector("#cancel-group-btn").onclick=()=>{
+        document.querySelector("#group-title").value="";
         load_chat_page();
     }
 
@@ -313,6 +319,7 @@ function load_members(e){
     mem_list.innerHTML="";
     var i=0;
     e.forEach(element=>{
+        if(element.type=="contact"){
          var mem_wrap=document.createElement("div");
          mem_wrap.classList.add("add_member");
 
@@ -331,7 +338,7 @@ function load_members(e){
          mem_wrap.appendChild(mem_user);
          mem_wrap.appendChild(mem_name);
          mem_list.appendChild(mem_wrap);
-
+        }
     })
 }
 
